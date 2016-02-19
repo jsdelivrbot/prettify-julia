@@ -61,7 +61,7 @@
                 // Single-line comments.
                 [PR['PR_COMMENT'], /^\#(?!\=)(?:.*)/],
                 // Multi-line comments.
-                [PR['PR_COMMENT'], /^\#\=[\s\S]*\=\#/],
+                [PR['PR_COMMENT'], /^\#\=[\s\S]*?\=\#/],
 
                 // Constants
                 [PR['PR_DECLARATION'], /(?:π|γ|φ|Inf|Inf32|Inf16|NaN|NaN32|NaN16)/],

@@ -98,8 +98,8 @@
                 [PR['PR_ATTRIB_NAME'], /^(?:\@.+?)\b/i],
 
                 // Multi-line strings
-                ['lang-julia-strings', /^((?:"(?=")"(?=")")[\s\S]*(?:"(?=")"(?=")"))/],
-                // Single-line strings - Verificar como ficam os escapes
+                ['lang-julia-strings', /^((?:"(?=")"(?=")")[\s\S]*?(?:"(?=")"(?=")"))/],
+                // Single-line strings
                 ['lang-julia-strings', /^((?:"(?!"))[^\"]+(?:"(?!")))/],
 
                 // Keywords

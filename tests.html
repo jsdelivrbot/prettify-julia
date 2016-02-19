@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:svg="http://www.w3.org/2000/svg">
+<head>
+<meta charset="UTF-8" />
+<title>Julia Syntax Highlight with Google Code Prettify</title>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true"></script>
+<script src="lang-julia.js"></script>
+</head>
+<body>
+<h2 style="font-family: Verdana, Helvetica, sans-serif">Julia Syntax Highlight with Google Code Prettify</h2>
+<h5 style="font-family: Verdana, Helvetica, sans-serif">Source: <a href="https://github.com/JuliaLang/julia/blob/master/base/inference.jl">https://github.com/JuliaLang/julia/blob/master/base/inference.jl</a></h4>
+<br />
+<pre class="prettyprint" style="background-color:#EEE">
+<code>
+#=
+
+Multi-line comment
+
+=#
+
+# Single-line comment
+
+function a{T}(x::Float64, y::Array{Int, 10})
+    local a = "normal string"
+    global b = """
+        Multi
+        Line
+        String
+    """
+    local c = "normal $(variable) string"
+    global d = """
+        Multi-line
+        $(inter)
+        String
+    """
+    e = 0
+
+    @time for z=1:10
+        d *= z
+    end
+end
+</code>
+</pre>
+</body>
+</html>

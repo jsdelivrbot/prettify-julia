@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Default-Style" content="default-style">
+<meta name="creator" content="Alexandre Gomiero de Oliveira" />
+<meta name="robots" content="index, nofollow" />
+<!--
+For maintenance, change the version and the author tags.
+
+Please, consider placing a small comment bellow and your github user
+(or any other information for contact)
+=============================================================================
+
+0.01.01 => First commit (gomiero)
+-->
+<meta name="author" content="Alexandre Gomiero de Oliveira" />
+<meta name="version" content="0.01.00" />
+<title>Julia  Highlight - Test Syntax</title>
+</script>
+<!-- The order of the style tags matter !! -->
+<style id="st0" type="text/css" media="all"></style>
+<style id="st_main" type="text/css" media="all">
+.show_theme {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+    background-color: white;
+    margin:auto;
+}
+.show_theme.str {  }
+.show_theme.kwd {  }
+.show_theme.com {  }
+.show_theme.typ {  }
+.show_theme.lit {  }
+.show_theme.pun {  }
+.show_theme.pln {  }
+.show_theme.tag {  }
+.show_theme.atn {  }
+.show_theme.atv {  }
+.show_theme.dec {  }
+</style>
+<style id="st_test_page" type="text/css" media="all">
+@import url('https://fonts.googleapis.com/css?family=Oxygen|Catamaran');
+.center-text {
+    text-align: center;
+}
+.main-title {
+    font-family: 'Catamaran', 'Verdana', 'Helvetica', 'sans-serif';
+}
+.style_box {
+    background:#FFFFFF;
+}
+#stbox  {
+    border-collapse:collapse;
+}
+
+#stbox td {
+    width: 170px;
+    border: 1px solid black;
+}
+.reference_title {
+    font-family: 'Catamaran', 'Verdana', 'Helvetica', 'sans-serif';
+    font-size: 12pt;
+    text-align: center;
+}
+body {
+    font-family: 'Oxygen', 'Verdana', 'Helvetica', 'sans-serif';
+}
+</style>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<script src="lang-julia.js"></script>
+<script>
+(function(w) {
+    "use strict";
+
+    const themes_url = [
+        'https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css',
+        'https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css',
+        'https://cdn.rawgit.com/google/code-prettify/master/styles/desert.css',
+        'https://cdn.rawgit.com/google/code-prettify/master/styles/sunburst.css',
+        'https://cdn.rawgit.com/google/code-prettify/master/styles/sons-of-obsidian.css',
+        'https://cdn.rawgit.com/google/code-prettify/master/styles/doxy.css'
+    ];
+
+    const themes_commands = [
+        '.str',
+        '.kwd',
+        '.com',
+        '.typ',
+        '.lit',
+        '.pun',
+        '.pln',
+        '.tag',
+        '.atn',
+        '.atv'
+    ];
+
+    var doc;
+    var selid;
+    var themes;
+
+    function getStyleSheet(id, url)
+    {
+        var req = new XMLHttpRequest();
+        var local_id = id;
+
+        req.onreadystatechange = function(e) {
+            if (e.target.readyState == 4 && e.target.status == 200) {
+                var res = e.target.responseText;
+                if (local_id == 1)
+                    res += '\npre { background-color:#EEE }; code { background-color:#EEE };';
+                themes[local_id] = res;
+                if (local_id == 0) {
+                    var links = doc.getElementsByTagName('link');
+                    var links_len = links.length;
+                    var head = links[0].parentNode;
+                    for (var i=0; i<links_len; i++)
+                        head.removeChild(links[i]);
+                    changeStyle(0);
+                }
+                selid[local_id].disabled = false;
+            };
+        };
+        req.open('GET', url, true);
+        req.send(null);
+    }
+
+    function changeStyle(e) {
+        var style_choice;
+        var style_tag;
+
+        if (typeof e === "number")
+            style_choice = e;
+        else
+            style_choice = parseInt(e.target.value);
+        style_tag = doc.getElementById('st0');
+        style_tag.textContent = themes[style_choice];
+        setTimeout(function() {
+            var code_box, org, org_style, org_bkg;
+            var st_sheet = document.styleSheets[1];
+
+            code_box  = document.querySelector('pre#first_pre');
+            org_style = window.getComputedStyle(code_box, null);
+            org_bkg = org_style.backgroundColor;
+            if (org_bkg == '' || org_bkg == "transparent") {
+                var pp_element = document.querySelector('pre.prettyprint') || document.querySelector('code.prettyprint');
+                var pp_style = window.getComputedStyle(pp_element, null);
+                org_bkg = pp_style.backgroundColor;
+            };
+            st_sheet.cssRules[0].style.backgroundColor = org_bkg;
+            for (var i=0; i<themes_commands.length; i++) {
+                org = code_box.querySelector(themes_commands[i]);
+                if (org === null)
+                    continue;
+                var n = org.style.cssText;
+                org_style = window.getComputedStyle(org, null);
+                for (var j=1; j<st_sheet.cssRules.length; j++) {
+                    if (st_sheet.cssRules[j].selectorText.indexOf(themes_commands[i]) !== -1) {
+                        /*
+                        // Working, but overrides all styles. Don't use!
+                        st_sheet.addRule(st_sheet.cssRules[j].selectorText, org_style.cssText, j);
+                        st_sheet.deleteRule(j + 1);
+                        */
+                        // Just copy color and font properties (don't copy entire font, it kills line-height)
+                        st_sheet.cssRules[j].style.fontFamily = org_style.fontFamily;
+                        st_sheet.cssRules[j].style.fontSize   = org_style.fontSize;
+                        st_sheet.cssRules[j].style.fontStyle  = org_style.fontStyle;
+                        st_sheet.cssRules[j].style.fontWeight = org_style.fontWeight;
+                        st_sheet.cssRules[j].style.color = org_style.color;
+                        break;
+                    };
+                };
+            };
+        }, '300');
+        return;
+    }
+
+    function onload(e) {
+        doc = e.target;
+        if (e === null) {
+            alert('Error loading document!');
+            return;
+        };
+        selid = doc.getElementById('sel-themes');
+        if (selid === null) {
+            alert("Error: can't find select on document");
+            return;
+        };
+        themes = new Array(themes_url.length);
+        for (var i=0; i<themes_url.length; i++)
+            getStyleSheet(i, themes_url[i]);
+        selid.addEventListener('change', changeStyle);
+        selid.selectedIndex = 0;
+    };
+
+    w.addEventListener('load', onload);
+}(window));
+</script>
+</head>
+<body>
+    <h2 class="center-text">Julia Syntax Highlight with Google Code Prettify</h2>
+    <hr />
+    <div style="float: left; margin-right:200px;">
+        <p class="">Available Themes (see <a href="https://rawgit.com/google/code-prettify/master/styles/index.html">Gallery of themes for code prettify</a>):</p>
+        <select id="sel-themes" name="themes">
+            <option value="0" disabled="true">Default</option>
+            <option value="1" disabled="true">Default (with gray #EEE background)</option>
+            <option value="2" disabled="true">Desert</option>
+            <option value="3" disabled="true">Sunburst</option>
+            <option value="4" disabled="true">Sons-Of-Obsidian</option>
+            <option value="5" disabled="true">Doxy</option>
+        </select>
+    </div>
+    <div>
+        <table id="stbox" style="font-size:8pt">
+            <tr><td class="reference_title" colspan="2"><strong>Reference</strong></td></tr>
+            <tr><td class="reference_title">Command</td><td class="reference_title">Result</td></tr>
+            <tr><td><strong>PR_STRING</strong></td><td><div class="show_theme str">String</div></td></tr>
+            <tr><td><strong>PR_KEYWORD</strong></td><td><div class="show_theme kwd">Keyword</div></td></tr>
+            <tr><td><strong>PR_COMMENT</strong></td><td><div class="show_theme com">Comment</div></td></tr>
+            <tr><td><strong>PR_TYPE</strong></td><td><div class="show_theme typ">Type</div></td></tr>
+            <tr><td><strong>PR_LITERAL</strong></td><td><div class="show_theme lit">Literal</div></td></tr>
+            <tr><td><strong>PR_PUNCTUATION</strong></td><td><div class="show_theme pun">Punctuation</div></td></tr>
+            <tr><td><strong>PR_PLAIN</strong></td><td><div class="show_theme pln">Plain Text</div></td></tr>
+            <tr><td><strong>PR_TAG</strong></td><td><div class="show_theme tag">Tag</div></td></tr>
+            <tr><td><strong>PR_DECLARATION</strong></td><td><div class="show_theme typ">Declaration</div></td></tr>
+            <tr><td><strong>PR_ATTRIB_NAME</strong></td><td><div class="show_theme atn">Attribute name</div></td></tr>
+            <tr><td><strong>PR_ATTRIB_VALUE</strong></td><td><div class="show_theme atv">Attribute value</div></td></tr>
+        </table>
+    </div>
+    <h4>Unit Tests</h4>
+    <hr />
+    <!-- Not visible - just to load styles -->
+    <pre id="first_pre" class="prettyprint lang-julia" style="display: none">
+"str"
+local
+# comment
+Float64
+123
+12*2
+a=10
+A=NaN
+@attrin_name
+(tag)
+AAATTRIBUTEVALUEEE
+    </pre>
+    <pre class="prettyprint lang-julia">
+        <code>
+#=
+Multi-line comment
+=#
+
+# Single-line comment
+
+function a{T}(x::Float64, y::Array{Int, 10})
+    local a = "normal string"
+    global b = """
+        Multi
+        Line
+        String
+    """
+    variable = 10
+    local c = "normal $(variable) string"
+    inter = 10
+    global d = """
+        Multi-line
+        $(inter)
+        String
+    """
+    x = 1
+    y = 10
+
+    @time for z=1:10
+        x *= y
+    end
+end
+        </code>
+    </pre>
+    <br />
+</body>
+</html>

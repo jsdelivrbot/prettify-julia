@@ -137,7 +137,7 @@
 
                 // Ignored rules
                 [PR['PR_SOURCE'], /^\bSSSOURCEEE\b/],
-                [PR['PR_ATTRIB_VALUE'], /^\bAAATTRIBUTEVALUEEE\b/],
+                [PR['PR_ATTRIB_VALUE'], /^\bAAATTRIBUTEVALUEEE\b/]
             ]
         ), ['julia']);
 })(window['PR']);

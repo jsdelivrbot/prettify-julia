@@ -39,10 +39,6 @@
             [
             ],
             [
-                // Ignored rules
-                [PR['PR_SOURCE'], /^\bSSSOURCEEE\b/],
-                [PR['PR_ATTRIB_VALUE'], /^\bAAATTRIBUTEVALUEEE\b/],
-
                 // Default interpolated member
                 [PR['PR_ATTRIB_NAME'], /^\$\(.+?\)/],
 
@@ -138,6 +134,10 @@
                 [PR['PR_TAG'], /^(?:\(|\)|\[|\])/],
                 // Identifiers.
                 [PR['PR_PLAIN'], /^[a-z_$][a-z0-9_]*/i]
+
+                // Ignored rules
+                [PR['PR_SOURCE'], /^\bSSSOURCEEE\b/],
+                [PR['PR_ATTRIB_VALUE'], /^\bAAATTRIBUTEVALUEEE\b/],
             ]
         ), ['julia']);
 })(window['PR']);

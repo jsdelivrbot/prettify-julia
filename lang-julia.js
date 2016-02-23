@@ -133,8 +133,7 @@
 
                 [PR['PR_TAG'], /^(?:\(|\)|\[|\])/],
 
-                // Ignored rules
-                [PR['PR_SOURCE'], /SSSOURCEEE/],
+                // Unused rule
                 [PR['PR_ATTRIB_VALUE'], /AAATTRIBUTEVALUEEE/],
 
                 // Identifiers.

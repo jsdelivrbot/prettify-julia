@@ -132,12 +132,14 @@
                 [PR['PR_PUNCTUATION'], /^'/],
 
                 [PR['PR_TAG'], /^(?:\(|\)|\[|\])/],
-                // Identifiers.
-                [PR['PR_PLAIN'], /^[a-z_$][a-z0-9_]*/i],
 
                 // Ignored rules
                 [PR['PR_SOURCE'], /SSSOURCEEE/],
                 [PR['PR_ATTRIB_VALUE'], /AAATTRIBUTEVALUEEE/]
+
+                // Identifiers.
+                [PR['PR_PLAIN'], /^[a-z_$][a-z0-9_]*/i],
+
             ]
         ), ['julia']);
 })(window['PR']);

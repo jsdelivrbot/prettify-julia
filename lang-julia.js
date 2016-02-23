@@ -39,6 +39,10 @@
             [
             ],
             [
+                // Ignored rules
+                [PR['PR_SOURCE'], /^\bSSSOURCEEE\b/],
+                [PR['PR_ATTRIB_VALUE'], /^\bAAATTRIBUTEVALUEEE\b/],
+
                 // Default interpolated member
                 [PR['PR_ATTRIB_NAME'], /^\$\(.+?\)/],
 

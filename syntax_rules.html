@@ -260,6 +260,13 @@ function a{T}(x::Float64, y::Array{Int, 10})
         Line
         String
     """
+
+    aaa = [1,2,3,4,5]'
+    bbb = ['a', 'b']
+    ccc = [1.0, 2.0, 3.0]
+    ddd = [4.0, 5.0, 6.0]
+    eee = ddd .* ccc + π
+
     variable = 10
     local c = "normal $(variable) string"
     inter = 10
